@@ -9,7 +9,11 @@ import { query } from './db.ts';
 const app = express();
 const PORT = 3001;
 
-app.use(cors());
+app.use(cors({
+  origin: ['https://docmind-ai-gray.vercel.app', 'http://localhost:3000'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
 app.use(express.json());
 
 const uploadsDir = './uploads';

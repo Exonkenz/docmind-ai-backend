@@ -83,7 +83,8 @@ async function processDocument(documentId: string, filePath: string, filename: s
 
     // Call Python processing service
 console.log('Sending file path:', path.join(ROOT_DIR, filePath));
-    const response = await fetch('http://localhost:8000/process', {
+const processingUrl = process.env.PROCESSING_URL || 'http://localhost:8000';
+    const response = await fetch(`${processingUrl}/process`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -172,7 +173,7 @@ app.get('/api/v1/documents/:id/summary', async (req, res) => {
   const level = req.query.level || 'technical';
 
   try {
-    const message = await fetch('http://localhost:8000/summarize', {
+    const message = await fetch(`${process.env.PROCESSING_URL || 'http://localhost:8000'}/summarize`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

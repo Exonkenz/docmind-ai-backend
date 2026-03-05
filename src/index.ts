@@ -82,14 +82,14 @@ async function processDocument(documentId: string, filePath: string, filename: s
     console.log(`Processing started: ${documentId}`);
 
     // Call Python processing service
-console.log('Sending file path:', path.join(ROOT_DIR, filePath));
 const processingUrl = process.env.PROCESSING_URL || 'http://localhost:8000';
+const fileContents = fs.readFileSync(path.join(ROOT_DIR, filePath)).toString('base64');
     const response = await fetch(`${processingUrl}/process`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         document_id: documentId,
-        file_path: path.join(ROOT_DIR, filePath),
+        file_contents: fileContents,
         filename: filename,
       }),
     });

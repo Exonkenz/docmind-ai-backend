@@ -31,20 +31,10 @@ const storage = multer.diskStorage({
   },
 });
 
-const fileFilter = (_req: any, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
-  const allowedExts = ['.pdf', '.md', '.markdown'];
-  const allowedMimes = ['application/pdf', 'text/markdown', 'text/plain', 'application/octet-stream'];
-  const ext = path.extname(file.originalname).toLowerCase();
-  if (allowedExts.includes(ext) || allowedMimes.includes(file.mimetype)) {
-    cb(null, true);
-  } else {
-    cb(new Error('Invalid file type. Only PDF and Markdown files are allowed.'));
-  }
-};
+
 
 const upload = multer({
   storage,
-  fileFilter,
   limits: { fileSize: 20 * 1024 * 1024 },
 });
 

@@ -233,7 +233,8 @@ app.use((err: any, _req: express.Request, res: express.Response, _next: express.
     res.status(413).json({ error: { code: 'FILE_TOO_LARGE', message: 'File exceeds 20MB limit.' } });
     return;
   }
-  res.status(415).json({ error: { code: 'INVALID_TYPE', message: err.message } });
+  console.error('Unhandled error:', err);
+  res.status(500).json({ error: { code: 'SERVER_ERROR', message: err.message || 'Unknown error' } });
 });
 
 app.listen(PORT, () => {
